@@ -49,14 +49,24 @@
 </head>
 <body>
 	<script>
-		var div, seed;
-		if (! window.location.hash) {
-			window.location.hash = '#' + Math.floor(Math.random()*9999999999);
-		}
-		seed = window.location.hash.substr(1);
-		div = document.createElement('div');
-		document.body.appendChild(div);
-		new Myd.Sudoku(9, div, seed);
+		(function (){
+			var div, seed;
+			if (! window.location.hash) {
+				window.location.hash = '#' + Math.floor(Math.random()*9999999999);
+			}
+			seed = window.location.hash.substr(1);
+			div = document.createElement('div');
+			document.body.appendChild(div);
+			var mySudoku = new Myd.Sudoku(9, div, seed);
+			window.addEventListener('keydown', function(event) {
+				if (event.keyCode === 76) {
+					mySudoku.fill(0);
+					div = document.createElement('div');
+					document.body.appendChild(div);
+					mySudoku.render(div);
+				}
+			}, true);
+		})()
 	</script>
 </body>
 </html>
