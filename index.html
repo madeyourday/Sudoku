@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Sudoku</title>
+	<script src="sudoku-0.0.0.min.js"></script>
+	<style>
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+		}
+		div {
+			display: inline-block;
+		}
+		table {
+			border-collapse: collapse;
+			margin: 20px;
+		}
+		td {
+			width: 20px;
+			height: 20px;
+			border: 1px solid #000;
+			color: #888;
+			text-align: center;
+		}
+		td:nth-child(3n) {
+			border-right-width: 3px;
+		}
+		td:nth-child(3n+1) {
+			border-left-width: 3px;
+		}
+		tr:nth-child(3n) td {
+			border-bottom-width: 3px;
+		}
+		tr:nth-child(3n+1) td {
+			border-top-width: 3px;
+		}
+		input {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			border: 0;
+			text-align: center;
+			color: #000;
+			font: inherit;
+			background: transparent;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		var div, seed;
+		if (! window.location.hash) {
+			window.location.hash = '#' + Math.floor(Math.random()*9999999999);
+		}
+		seed = window.location.hash.substr(1);
+		div = document.createElement('div');
+		document.body.appendChild(div);
+		new Myd.Sudoku(9, div, seed);
+	</script>
+</body>
+</html>
