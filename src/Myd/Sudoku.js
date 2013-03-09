@@ -73,6 +73,10 @@ Myd.Sudoku = (function() {
 		var numbers = this.shuffle(this.possibleNumbers(index)),
 			length = numbers.length;
 
+		if (this.fields[index]) {
+			return length && this.fill(index + 1);
+		}
+
 		for (var i = 0; i < length; i++) {
 			this.fields[index] = numbers[i];
 			if (this.fill(index + 1)) {

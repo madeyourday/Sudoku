@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title>Sudoku</title>
 	<!--<script src="sudoku.min.js"></script>-->
-	<script src="sudoku.js"></script>
+	<script src="sudoku-0.0.0.js"></script>
 	<style>
 		body {
 			font-family: Helvetica, Arial, sans-serif;
@@ -50,14 +50,24 @@
 </head>
 <body>
 	<script>
-		var div, seed;
-		if (! window.location.hash) {
-			window.location.hash = '#' + Math.floor(Math.random()*9999999999);
-		}
-		seed = window.location.hash.substr(1);
-		div = document.createElement('div');
-		document.body.appendChild(div);
-		new Myd.Sudoku(9, div, seed);
+		(function (){
+			var div, seed;
+			if (! window.location.hash) {
+				window.location.hash = '#' + Math.floor(Math.random()*9999999999);
+			}
+			seed = window.location.hash.substr(1);
+			div = document.createElement('div');
+			document.body.appendChild(div);
+			var mySudoku = new Myd.Sudoku(9, div, seed);
+			window.addEventListener('keydown', function(event) {
+				if (event.keyCode === 76) {
+					mySudoku.fill(0);
+					div = document.createElement('div');
+					document.body.appendChild(div);
+					mySudoku.render(div);
+				}
+			}, true);
+		})()
 	</script>
 </body>
 </html>
