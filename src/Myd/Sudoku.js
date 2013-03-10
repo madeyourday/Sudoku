@@ -15,7 +15,7 @@ Myd.Sudoku = (function() {
 	 * @param integer size the size of the sudoku
 	 * @param string  seed the random seed (optional)
 	 */
-	function Sudoku(size, element, seed) {
+	function Sudoku(size, element, seed, difficulty) {
 
 		if (seed) {
 			Math.seedrandom(seed);
@@ -23,6 +23,7 @@ Myd.Sudoku = (function() {
 		if (! size) {
 			size = 4;
 		}
+		this.difficulty = difficulty || 0;
 		this.size = size;
 		this.areaSize = Math.sqrt(size);
 		this.areaSize = this.areaSize === Math.floor(this.areaSize) ?
@@ -95,13 +96,27 @@ Myd.Sudoku = (function() {
 	Sudoku.prototype.eraseAllPossible = function() {
 
 		var fields = this.shuffle(this.range(this.length, 0)),
-			lastNumber;
+			originalFields = [],
+			i,
+			lastNumber,
+			difficulty;
 
-		for (var i = 0; i < this.length; i++) {
+		for (i = 0; i < this.length; i++) {
+			originalFields[i] = this.fields[i];
+		}
+
+		for (i = 0; i < this.length; i++) {
 			lastNumber = this.fields[fields[i]];
 			this.fields[fields[i]] = 0;
 			if (this.getSolutionsCount(true) > 1) {
 				this.fields[fields[i]] = lastNumber;
+			}
+		}
+
+		for (difficulty = this.difficulty, i = this.length - 1; i && difficulty; i--) {
+			if (! this.fields[fields[i]]) {
+				this.fields[fields[i]] = originalFields[fields[i]];
+				difficulty--;
 			}
 		}
 

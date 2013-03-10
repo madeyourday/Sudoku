@@ -51,14 +51,15 @@
 <body>
 	<script>
 		(function (){
-			var div, seed;
+			var div, seed, difficulty;
 			if (! window.location.hash) {
-				window.location.hash = '#' + Math.floor(Math.random()*9999999999);
+				window.location.hash = '#0-' + Math.floor(Math.random()*9999999999);
 			}
-			seed = window.location.hash.substr(1);
+			seed = window.location.hash.substr(1).split('-')[1];
+			difficulty = window.location.hash.substr(1).split('-')[0] * 1;
 			div = document.createElement('div');
 			document.body.appendChild(div);
-			var mySudoku = new Myd.Sudoku(9, div, seed);
+			var mySudoku = new Myd.Sudoku(9, div, seed, difficulty);
 			window.addEventListener('keydown', function(event) {
 				if (event.keyCode === 76) {
 					mySudoku.fill(0);
